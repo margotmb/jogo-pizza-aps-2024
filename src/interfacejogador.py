@@ -11,10 +11,10 @@ class InterfaceJogador(DogPlayerInterface):
         self.main_window = Tk()
         
         # Organização e preenchimento da janela  
-        self.fill_main_window()  
+        self.fill_main_window()
 
         # Tratamento do domínio do problema
-        self.board = Mesa()  
+        self.board = Mesa()
 
         # Set Player Name
         player_name = simpledialog.askstring(title="Player identification", prompt="Qual o seu nome?")
