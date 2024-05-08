@@ -1,3 +1,3 @@
-import src.interfacejogador as interfacejogador
+import interfacejogador
 
-interfacejogador.PlayerInterface()
+interfacejogador.InterfaceJogador()
