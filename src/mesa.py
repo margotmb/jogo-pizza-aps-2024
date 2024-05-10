@@ -18,6 +18,7 @@ class Mesa:
         self.__baralho_missoes = []
         self.__estado_partida = 1
 
-    @property
-    def estado_partida(self):
+
+
+    def get_status(self):
         return self.__estado_partida

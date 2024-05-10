@@ -17,7 +17,7 @@ class InterfaceJogador(DogPlayerInterface):
         self.mesa = Mesa()
 
         # Recebe o estado da partida e atualiza interface de acordo
-        estado_partida = self.mesa.estado_partida
+        estado_partida = self.mesa.get_status()
         self.atualiza_interface(estado_partida)
 
         # Set Player Name
