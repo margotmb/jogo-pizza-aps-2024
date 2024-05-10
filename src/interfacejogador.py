@@ -14,7 +14,11 @@ class InterfaceJogador(DogPlayerInterface):
         self.fill_main_window()
 
         # Tratamento do domínio do problema
-        self.board = Mesa()
+        self.mesa = Mesa()
+
+        # Recebe o estado da partida e atualiza interface de acordo
+        estado_partida = self.mesa.estado_partida
+        self.atualiza_interface(estado_partida)
 
         # Set Player Name
         player_name = simpledialog.askstring(title="Player identification", prompt="Qual o seu nome?")
@@ -46,3 +50,6 @@ class InterfaceJogador(DogPlayerInterface):
         #self.table_frame.grid(row=0, column=0)
         #self.message_frame = Frame(self.main_window, padx=0, pady=10, bg="gold3")
         #self.message_frame.grid(row=1, column=0)
+    
+    def atualiza_interface(self, estado_partida):
+        NotImplemented

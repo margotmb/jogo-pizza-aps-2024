@@ -17,3 +17,7 @@ class Mesa:
         self.__baralho_fracoes  = []
         self.__baralho_missoes = []
         self.__estado_partida = 1
+
+    @property
+    def estado_partida(self):
+        return self.__estado_partida
