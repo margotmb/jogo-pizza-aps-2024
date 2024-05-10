@@ -12,8 +12,12 @@ import carta
 class Mesa:
     def __init__(self):
         super().__init__()
+
+        # Instancia jogadores e os define
         self.local_player = jogador.Jogador()
         self.remote_player = jogador.Jogador()
+        self.local_player.inicializar(1, "Green player", "Green player")
+        self.remote_player.inicializar(2, "Red player", "Red player")
         self.__baralho_fracoes  = []
         self.__baralho_missoes = []
         self.__estado_partida = 1
