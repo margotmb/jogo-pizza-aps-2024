@@ -96,6 +96,12 @@ class InterfaceJogador(DogPlayerInterface):
         #Frame central -> Frame Baralhos -> label:baralho_fracoes, label: baralho_missoes
         self.frame_central = Frame(self.main_window, width=1280, height=220, bg="white")
         self.frame_central.grid(row=1, column=0)
+
+        self.baralho_fracoes = Label(self.frame_central, text="baralho_fracoes", bg='yellow', borderwidth=2, relief="solid")
+        self.baralho_fracoes.place(width=300, height=220, x=340, y=0)
+
+        self.baralho_missoes = Label(self.frame_central, text="baralho_missoes", bg="green", borderwidth=2, relief="solid")
+        self.baralho_missoes.place(width=300, height=220, x=660, y=0)
         # ----
 
 
