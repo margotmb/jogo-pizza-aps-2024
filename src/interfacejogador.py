@@ -53,7 +53,7 @@ class InterfaceJogador(DogPlayerInterface):
 
         self.start_button = Label(self.main_window, text = "Iniciar Partida", width=100, height=100, borderwidth=2, relief="groove")
         self.start_button.place(width=150, height=50, anchor='center', relx=0.5, rely=0.55)
-        self.start_button.bind("<Button-1>", lambda e: self. main_game_screen())
+        self.start_button.bind("<Button-1>", lambda e: self.start_match())
 
         # Frame principal - mock
         #self.main_frame = Frame(self.main_window, width=1280, height=720)
@@ -66,7 +66,7 @@ class InterfaceJogador(DogPlayerInterface):
 
     def main_game_screen(self):
         self.start_button.destroy()
-
+        
         #Disposição da Interface: Ver template_interface.png
         #Estado atual: produzindo a interface em sua versão template.
         #Futuramente alterar para receber essas informações através da mesa
@@ -161,3 +161,15 @@ class InterfaceJogador(DogPlayerInterface):
 
     def atualiza_interface(self, estado_partida):
         NotImplemented
+    
+    def start_match(self):
+        start_status = self.dog_server_interface.start_match(2)
+        message = start_status.get_message()
+        messagebox.showinfo(message=message)
+        if (start_status.get_code() == "2"):
+            self.main_game_screen()
+
+    def receive_start(self, start_status):
+        message = start_status.get_message()
+        messagebox.showinfo(message=message)
+        self.main_game_screen()
