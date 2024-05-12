@@ -21,13 +21,17 @@ class InterfaceJogador(DogPlayerInterface):
         self.atualiza_interface(estado_partida)
 
         # Set Player Name
-        #player_name = simpledialog.askstring(title="Player identification", prompt="Qual o seu nome?")
-        
+        player_name = simpledialog.askstring(title="Player identification", prompt="Qual o seu nome?")
+
 
         # Dog 
-        #self.dog_server_interface = DogActor()
-        #message = self.dog_server_interface.initialize(player_name, self)
-        #messagebox.showinfo(message=message)
+        self.dog_server_interface = DogActor()
+        message = self.dog_server_interface.initialize(player_name, self)
+        messagebox.showinfo(message=message)
+
+        text_string = "Olá, " + player_name + "\n\n Clique no botão abaixo para começar"
+        self.player_name = Label(self.main_window, text=text_string, bg="khaki1", borderwidth=3, relief="ridge")
+        self.player_name.place(width = 300, height=100, x=520, y=200)
 
         # Main Loop
         self.main_window.mainloop()
@@ -38,20 +42,34 @@ class InterfaceJogador(DogPlayerInterface):
         self.main_window.title("Jogo da Pizza")
         #self.main_window.iconbitmap("src/images/icon.ico")
         self.main_window.resizable(False, False)
-        #self.main_window["bg"] = "gold3"
-        
-        # Frame principal
-        self.main_frame = Frame(self.main_window, width=1280, height=720)
+        self.main_window.geometry("1280x720")
+        #self.main_window["bg"] = 'gold3'
 
+        self.bg_img = PhotoImage(file="src/images/init_bg.png")
+        self.bg_label = Label(self.main_window, image = self.bg_img)
+        self.bg_label.place(x=0,y=0)
+        
+        
+
+        self.start_button = Label(self.main_window, text = "Iniciar Partida", width=100, height=100, borderwidth=2, relief="groove")
+        self.start_button.place(width=150, height=50, x=600, y=320)
+        self.start_button.bind("<Button-1>", lambda e: self. main_game_screen())
+
+        # Frame principal - mock
+        #self.main_frame = Frame(self.main_window, width=1280, height=720)
+        #self.main_frame.grid(row=0, column=0)
         #self.main_frame.grid(row=0, column=0)
         #self.img_mockup_interface = PhotoImage(file="src/images/mockup.png")
         #self.main_label = Label(self.main_frame, bg='red', image=self.img_mockup_interface)
         #self.main_label.place(relx=0.5, rely=0.5, anchor = 'center')
 
 
+    def main_game_screen(self):
+        self.start_button.destroy()
+
         #Disposição da Interface: Ver template_interface.png
-        #Estado: produzindo a interface em seu estado template.
-        #Futuramente alterar para receber essas informações informações através da mesa
+        #Estado atual: produzindo a interface em sua versão template.
+        #Futuramente alterar para receber essas informações através da mesa
 
         #Frame oponente
         self.frame_oponente = Frame(self.main_window, width=1280, height=250, bg="red")
@@ -140,17 +158,6 @@ class InterfaceJogador(DogPlayerInterface):
                                           image=self.img_missao_jogador)
         self.missao_jogador.place(width=300, height=250, x=400, y=0)
 
-
-        
-
-        #self.img_fracao_oponente = PhotoImage(file="src/images/fracao1-4.png") 
-        #self.fracao_oponente = Label(self.enemy_frame, bg='red', image=self.img_fracao_oponente)
-        #self.fracao_oponente.place(relx=0.3, rely=0.5, anchor = 'e')
-
-        #self.img_missao_oponente = PhotoImage(file="src/images/missao1-2.png")
-        #self.missao_oponente = Label(self.enemy_frame, bg='red', image=self.img_missao_oponente)
-        #self.missao_oponente.place(relx=0.9, rely=0.5,anchor = 'center')
-        #self.missao_oponente.bind("<Button-1>",lambda e:print("123"))
 
     def atualiza_interface(self, estado_partida):
         NotImplemented
