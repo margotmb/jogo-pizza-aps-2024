@@ -53,12 +53,11 @@ class InterfaceJogador(DogPlayerInterface):
         #Estado: produzindo a interface em seu estado template.
         #Futuramente alterar para receber essas informações informações através da mesa
 
-
-        #Frame oponente -> Frame pizza_missao_oponente, Frame oponente frações
+        #Frame oponente
         self.frame_oponente = Frame(self.main_window, width=1280, height=250, bg="red")
         self.frame_oponente.grid(row=0, column=0)
 
-        #Espaço no lado oponente onde fica a missão e as pizzas
+        #Frame: pizza_missao_oponente
         self.frame_pizza_missao_oponente = Frame(self.frame_oponente, width=700, height=250, bg="green")
         self.frame_pizza_missao_oponente.grid(row=0, column=0)
 
@@ -79,27 +78,64 @@ class InterfaceJogador(DogPlayerInterface):
                                           image=self.img_pizza_oponente)
         self.label_pizza_oponente.place(width=400, height=250, x=300, y=0)
 
-        # Frame Frações Oponente
+        # Frame: oponente_fracoes
         self.frame_oponente_fracoes = Frame(self.frame_oponente, width=580, height=250, bg="yellow")
         self.frame_oponente_fracoes.grid(row=0, column=1)
 
         #Labels Carta Fração -> popula um array de cartas
-        self.labels_carta_fracao = []
-        self.img_carta_fracao = PhotoImage(file="src/images/fracao1-4.png")
+        self.labels_carta_fracao_oponente = []
+        self.img_carta_fracao_oponente = PhotoImage(file="src/images/fracao1-4.png")
         x_pos = 20
         for i in range(0,5):
-            a_Label = Label(self.frame_oponente_fracoes, image=self.img_carta_fracao)
-            self.labels_carta_fracao.append(a_Label)
-            self.labels_carta_fracao[i].place(width=100, height=250, x=x_pos, y = 0)
+            a_Label = Label(self.frame_oponente_fracoes, image=self.img_carta_fracao_oponente)
+            self.labels_carta_fracao_oponente.append(a_Label)
+            self.labels_carta_fracao_oponente[i].place(width=100, height=250, x=x_pos, y = 0)
             x_pos = x_pos + 110
 
+        # -----
         #Frame central -> Frame Baralhos -> label:baralho_fracoes, label: baralho_missoes
         self.frame_central = Frame(self.main_window, width=1280, height=220, bg="white")
         self.frame_central.grid(row=1, column=0)
+        # ----
 
+
+        #Frame jogador
         self.frame_jogador = Frame(self.main_window, width=1280, height=250, bg="blue")
         self.frame_jogador.grid(row=2, column=0)
 
+        #jogador_fracoes
+        self.frame_jogador_fracoes = Frame(self.frame_jogador, width=580, height=250, bg="yellow")
+        self.frame_jogador_fracoes.grid(row=0, column=0)
+
+        #Labels Carta Fração -> popula um array de cartas
+        self.labels_carta_fracao_jogador= []
+        self.img_carta_fracao_jogador = PhotoImage(file="src/images/fracao1-4.png")
+        x_pos = 20
+        for i in range(0,5):
+            a_Label = Label(self.frame_jogador_fracoes, image=self.img_carta_fracao_jogador)
+            self.labels_carta_fracao_jogador.append(a_Label)
+            self.labels_carta_fracao_jogador[i].place(width=100, height=250, x=x_pos, y = 0)
+            x_pos = x_pos + 110
+
+        self.frame_pizza_missao_jogador = Frame(self.frame_jogador, width=700, height=250, bg="green")
+        self.frame_pizza_missao_jogador.grid(row=0, column=1)
+
+        # pizza_jogador
+        self.img_pizza_jogador = PhotoImage(file="src/images/pizza16.png")
+        self.label_pizza_jogador = Label(self.frame_pizza_missao_jogador,
+                                         bg='purple',
+                                        image=self.img_pizza_jogador)
+        self.label_pizza_jogador.place(width=400, height=250, x=0, y=0)
+
+        # missao_jogador
+        self.img_missao_jogador = PhotoImage(file="src/images/missao1-2.png")
+        self.label_missao_jogador = Label(self.frame_pizza_missao_jogador,
+                                          bg="red",
+                                          image=self.img_missao_jogador)
+        self.label_missao_jogador.place(width=300, height=250, x=400, y=0)
+
+
+        
 
         #self.img_fracao_oponente = PhotoImage(file="src/images/fracao1-4.png") 
         #self.fracao_oponente = Label(self.enemy_frame, bg='red', image=self.img_fracao_oponente)
