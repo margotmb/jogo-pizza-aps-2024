@@ -31,7 +31,7 @@ class InterfaceJogador(DogPlayerInterface):
 
         text_string = "Olá, " + player_name + "\n\n Clique no botão abaixo para começar"
         self.player_name = Label(self.main_window, text=text_string, bg="khaki1", borderwidth=3, relief="ridge")
-        self.player_name.place(width = 300, height=100, x=520, y=200)
+        self.player_name.place(width = 300, height=100, anchor='center', relx=0.5, rely=0.4)
 
         # Main Loop
         self.main_window.mainloop()
@@ -52,7 +52,7 @@ class InterfaceJogador(DogPlayerInterface):
         
 
         self.start_button = Label(self.main_window, text = "Iniciar Partida", width=100, height=100, borderwidth=2, relief="groove")
-        self.start_button.place(width=150, height=50, x=600, y=320)
+        self.start_button.place(width=150, height=50, anchor='center', relx=0.5, rely=0.55)
         self.start_button.bind("<Button-1>", lambda e: self. main_game_screen())
 
         # Frame principal - mock
@@ -112,7 +112,7 @@ class InterfaceJogador(DogPlayerInterface):
 
         # -----
         #Frame central -> Frame Baralhos -> label:baralho_fracoes, label: baralho_missoes
-        self.frame_central = Frame(self.main_window, width=1280, height=220, bg="white")
+        self.frame_central = Frame(self.main_window, width=1280, height=220, bg="khaki1")
         self.frame_central.grid(row=1, column=0)
 
         self.baralho_fracoes = Label(self.frame_central, text="baralho_fracoes", bg='yellow', borderwidth=2, relief="solid")
