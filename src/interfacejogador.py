@@ -50,6 +50,10 @@ class InterfaceJogador(DogPlayerInterface):
 
 
         #Disposição da Interface: Ver template_interface.png
+        #Estado: produzindo a interface em seu estado template.
+        #Futuramente alterar para receber essas informações informações através da mesa
+
+
         #Frame oponente -> Frame pizza_missao_oponente, Frame oponente frações
         self.frame_oponente = Frame(self.main_window, width=1280, height=250, bg="red")
         self.frame_oponente.grid(row=0, column=0)
@@ -74,8 +78,14 @@ class InterfaceJogador(DogPlayerInterface):
                                           bg='purple',
                                           image=self.img_pizza_oponente)
         self.label_pizza_oponente.place(width=400, height=250, x=300, y=0)
+
+        # Frame Frações Oponente
         self.frame_oponente_fracoes = Frame(self.frame_oponente, width=580, height=250, bg="yellow")
         self.frame_oponente_fracoes.grid(row=0, column=1)
+
+        #Labels Carta Fração
+        self.labels_carta_fracao = []
+        
 
         #Frame central -> Frame Baralhos -> label:baralho_fracoes, label: baralho_missoes
         self.frame_central = Frame(self.main_window, width=1280, height=220, bg="white")
