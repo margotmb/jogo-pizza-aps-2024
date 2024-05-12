@@ -63,33 +63,33 @@ class InterfaceJogador(DogPlayerInterface):
 
         #Label Missao
         self.img_missao_oponente = PhotoImage(file="src/images/missao1-2.png")
-        self.label_missao_oponente = Label(self.frame_pizza_missao_oponente, 
+        self.missao_oponente = Label(self.frame_pizza_missao_oponente, 
                                            bg='red', 
                                            #text="label_missao_oponente",
                                            image=self.img_missao_oponente
                                            )
-        self.label_missao_oponente.place(width=300, height=250, x=0, y=0)
+        self.missao_oponente.place(width=300, height=250, x=0, y=0)
         
 
         #Label Pizzas
         self.img_pizza_oponente = PhotoImage(file="src/images/pizza16.png")
-        self.label_pizza_oponente = Label(self.frame_pizza_missao_oponente,
+        self.pizza_oponente = Label(self.frame_pizza_missao_oponente,
                                           bg='maroon',
                                           image=self.img_pizza_oponente)
-        self.label_pizza_oponente.place(width=400, height=250, x=300, y=0)
+        self.pizza_oponente.place(width=400, height=250, x=300, y=0)
 
         # Frame: oponente_fracoes
         self.frame_oponente_fracoes = Frame(self.frame_oponente, width=580, height=250, bg='red')
         self.frame_oponente_fracoes.grid(row=0, column=1)
 
         #Labels Carta Fração -> popula um array de cartas
-        self.labels_carta_fracao_oponente = []
+        self.cartas_fracao_oponente = []
         self.img_carta_fracao_oponente = PhotoImage(file="src/images/fracao1-4.png")
         x_pos = 20
         for i in range(0,5):
             a_Label = Label(self.frame_oponente_fracoes, image=self.img_carta_fracao_oponente, bg="red")
-            self.labels_carta_fracao_oponente.append(a_Label)
-            self.labels_carta_fracao_oponente[i].place(width=100, height=250, x=x_pos, y = 0)
+            self.cartas_fracao_oponente.append(a_Label)
+            self.cartas_fracao_oponente[i].place(width=100, height=250, x=x_pos, y = 0)
             x_pos = x_pos + 110
 
         # -----
@@ -114,13 +114,13 @@ class InterfaceJogador(DogPlayerInterface):
         self.frame_jogador_fracoes.grid(row=0, column=0)
 
         #Labels Carta Fração -> popula um array de cartas
-        self.labels_carta_fracao_jogador= []
+        self.cartas_fracao_jogador= []
         self.img_carta_fracao_jogador = PhotoImage(file="src/images/fracao1-4.png")
         x_pos = 20
         for i in range(0,5):
             a_Label = Label(self.frame_jogador_fracoes, image=self.img_carta_fracao_jogador, bg="blue")
-            self.labels_carta_fracao_jogador.append(a_Label)
-            self.labels_carta_fracao_jogador[i].place(width=100, height=250, x=x_pos, y = 0)
+            self.cartas_fracao_jogador.append(a_Label)
+            self.cartas_fracao_jogador[i].place(width=100, height=250, x=x_pos, y = 0)
             x_pos = x_pos + 110
 
         self.frame_pizza_missao_jogador = Frame(self.frame_jogador, width=700, height=250)
@@ -128,17 +128,17 @@ class InterfaceJogador(DogPlayerInterface):
 
         # pizza_jogador
         self.img_pizza_jogador = PhotoImage(file="src/images/pizza16.png")
-        self.label_pizza_jogador = Label(self.frame_pizza_missao_jogador,
+        self.pizza_jogador = Label(self.frame_pizza_missao_jogador,
                                          bg='navyblue',
                                         image=self.img_pizza_jogador)
-        self.label_pizza_jogador.place(width=400, height=250, x=0, y=0)
+        self.pizza_jogador.place(width=400, height=250, x=0, y=0)
 
         # missao_jogador
         self.img_missao_jogador = PhotoImage(file="src/images/missao1-2.png")
-        self.label_missao_jogador = Label(self.frame_pizza_missao_jogador,
+        self.missao_jogador = Label(self.frame_pizza_missao_jogador,
                                           bg="blue",
                                           image=self.img_missao_jogador)
-        self.label_missao_jogador.place(width=300, height=250, x=400, y=0)
+        self.missao_jogador.place(width=300, height=250, x=400, y=0)
 
 
         
