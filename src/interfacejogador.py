@@ -21,13 +21,13 @@ class InterfaceJogador(DogPlayerInterface):
         self.atualiza_interface(estado_partida)
 
         # Set Player Name
-        player_name = simpledialog.askstring(title="Player identification", prompt="Qual o seu nome?")
+        #player_name = simpledialog.askstring(title="Player identification", prompt="Qual o seu nome?")
         
 
         # Dog 
-        self.dog_server_interface = DogActor()
-        message = self.dog_server_interface.initialize(player_name, self)
-        messagebox.showinfo(message=message)
+        #self.dog_server_interface = DogActor()
+        #message = self.dog_server_interface.initialize(player_name, self)
+        #messagebox.showinfo(message=message)
 
         # Main Loop
         self.main_window.mainloop()
@@ -40,24 +40,49 @@ class InterfaceJogador(DogPlayerInterface):
         self.main_window.resizable(False, False)
         #self.main_window["bg"] = "gold3"
         
+        # Frame principal
         self.main_frame = Frame(self.main_window, width=1280, height=720)
-        self.main_frame.grid(row=0, column=0)
 
-        self.img_mockup_interface = PhotoImage(file="src/images/mockup.png")
-        self.main_label = Label(self.main_frame, bg='red', image=self.img_mockup_interface)
-        self.main_label.place(relx=0.5, rely=0.5, anchor = 'center')
+        #self.main_frame.grid(row=0, column=0)
+        #self.img_mockup_interface = PhotoImage(file="src/images/mockup.png")
+        #self.main_label = Label(self.main_frame, bg='red', image=self.img_mockup_interface)
+        #self.main_label.place(relx=0.5, rely=0.5, anchor = 'center')
 
-        #self.enemy_frame_cards = Frame(self.main_window, width=426, height=250, bg="red")
-        #self.enemy_frame_cards.grid(row=0, column=0)
 
-        #self.enemy_frame = Frame(self.main_window, width=1280, height=250, bg="red")
-        #self.enemy_frame.grid(row=0, column=0)
+        #Disposição da Interface: Ver template_interface.png
+        #Frame oponente -> Frame pizza_missao_oponente, Frame oponente frações
+        self.frame_oponente = Frame(self.main_window, width=1280, height=250, bg="red")
+        self.frame_oponente.grid(row=0, column=0)
 
-        #self.frame_baralhos = Frame(self.main_window, width=1280, height=220, bg="white")
-        #self.frame_baralhos.grid(row=1, column=0)
+        #Espaço no lado oponente onde fica a missão e as pizzas
+        self.frame_pizza_missao_oponente = Frame(self.frame_oponente, width=700, height=250, bg="green")
+        self.frame_pizza_missao_oponente.grid(row=0, column=0)
 
-        #self.player_frame = Frame(self.main_window, width=1280, height=250, bg="blue")
-        #self.player_frame.grid(row=2, column=0)
+        #Label Missao
+        self.img_missao_oponente = PhotoImage(file="src/images/missao1-2.png")
+        self.label_missao_oponente = Label(self.frame_pizza_missao_oponente, 
+                                           bg='red', 
+                                           #text="label_missao_oponente",
+                                           image=self.img_missao_oponente
+                                           )
+        self.label_missao_oponente.place(width=300, height=250, x=0, y=0)
+        
+
+        #Label Pizzas
+        self.img_pizza_oponente = PhotoImage(file="src/images/pizza16.png")
+        self.label_pizza_oponente = Label(self.frame_pizza_missao_oponente,
+                                          bg='purple',
+                                          image=self.img_pizza_oponente)
+        self.label_pizza_oponente.place(width=400, height=250, x=300, y=0)
+        self.frame_oponente_fracoes = Frame(self.frame_oponente, width=580, height=250, bg="yellow")
+        self.frame_oponente_fracoes.grid(row=0, column=1)
+
+        #Frame central -> Frame Baralhos -> label:baralho_fracoes, label: baralho_missoes
+        self.frame_central = Frame(self.main_window, width=1280, height=220, bg="white")
+        self.frame_central.grid(row=1, column=0)
+
+        self.frame_jogador = Frame(self.main_window, width=1280, height=250, bg="blue")
+        self.frame_jogador.grid(row=2, column=0)
 
         #self.img_fracao_oponente = PhotoImage(file="src/images/fracao1-4.png") 
         #self.fracao_oponente = Label(self.enemy_frame, bg='red', image=self.img_fracao_oponente)
