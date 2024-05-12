@@ -83,9 +83,15 @@ class InterfaceJogador(DogPlayerInterface):
         self.frame_oponente_fracoes = Frame(self.frame_oponente, width=580, height=250, bg="yellow")
         self.frame_oponente_fracoes.grid(row=0, column=1)
 
-        #Labels Carta Fração
+        #Labels Carta Fração -> popula um array de cartas
         self.labels_carta_fracao = []
-        
+        self.img_carta_fracao = PhotoImage(file="src/images/fracao1-4.png")
+        x_pos = 20
+        for i in range(0,5):
+            a_Label = Label(self.frame_oponente_fracoes, image=self.img_carta_fracao)
+            self.labels_carta_fracao.append(a_Label)
+            self.labels_carta_fracao[i].place(width=100, height=250, x=x_pos, y = 0)
+            x_pos = x_pos + 110
 
         #Frame central -> Frame Baralhos -> label:baralho_fracoes, label: baralho_missoes
         self.frame_central = Frame(self.main_window, width=1280, height=220, bg="white")
@@ -93,6 +99,7 @@ class InterfaceJogador(DogPlayerInterface):
 
         self.frame_jogador = Frame(self.main_window, width=1280, height=250, bg="blue")
         self.frame_jogador.grid(row=2, column=0)
+
 
         #self.img_fracao_oponente = PhotoImage(file="src/images/fracao1-4.png") 
         #self.fracao_oponente = Label(self.enemy_frame, bg='red', image=self.img_fracao_oponente)
