@@ -19,9 +19,9 @@ class InterfaceJogador(DogPlayerInterface):
         player_name = simpledialog.askstring(title="Player identification", prompt="Qual o seu nome?")
 
         # Dog 
-        #self.dog_server_interface = DogActor()
-        #message = self.dog_server_interface.initialize(player_name, self)
-        #messagebox.showinfo(message=message)
+        self.dog_server_interface = DogActor()
+        message = self.dog_server_interface.initialize(player_name, self)
+        messagebox.showinfo(message=message)
 
         text_string = "Olá, " + player_name + "\n\n Clique no botão abaixo para começar"
         self.player_name = Label(self.main_window, text=text_string, bg="khaki1", borderwidth=3, relief="ridge")
@@ -33,7 +33,7 @@ class InterfaceJogador(DogPlayerInterface):
     
     # Popula a janela Tk com os elementos
     def fill_main_window(self):
-        estado_partida = self.mesa.get_status()
+        estado_partida = self.mesa.get_estado_partida()
         self.main_window.title("Jogo da Pizza")
         #self.main_window.iconbitmap("src/images/icon.ico")
         self.main_window.resizable(False, False)
@@ -45,15 +45,15 @@ class InterfaceJogador(DogPlayerInterface):
         
         self.start_button = Label(self.main_window, text = "Iniciar Partida", width=100, height=100, borderwidth=2, relief="groove")
         self.start_button.place(width=150, height=50, anchor='center', relx=0.5, rely=0.55)
-        #self.start_button.bind("<Button-1>", lambda e: self.start_match())
-        self.start_button.bind("<Button-1>", lambda e: self.update_interface(estado_partida))
+        self.start_button.bind("<Button-1>", lambda e: self.start_match())
+        #self.start_button.bind("<Button-1>", lambda e: self.update_interface(estado_partida))
 
 
 
     def update_interface(self,estado_partida):
-        if estado_partida == 1:
+        if estado_partida == 0 or estado_partida == 1:
             self.start_button.destroy()
-        
+        print(estado_partida)
         #Disposição da Interface: Ver template_interface.png
         #Estado atual: produzindo a interface em sua versão template.
         #Futuramente alterar para receber essas informações através da mesa
@@ -84,15 +84,39 @@ class InterfaceJogador(DogPlayerInterface):
         self.pizza_oponente = Label(self.frame_oponente,
                                           bg='maroon',
                                           image=self.img_pizza_oponente)
-        self.pizza_oponente.place(width=400, height=250, x=300, y=0)
-        self.pizza_oponente.bind("<Button-1>", lambda e: print('aaa'))
-        
-        # -- Frame Cartas
-        self.frame_cartas_oponente = Frame(self.frame_oponente, width=600, height=250, bg="green")
+        self.pizza_oponente.place(width=400, height=200, x=300, y=0)
 
-        self.cartas_fracao_oponente = self.mesa.get_remote_cartas()
-        self.img_carta_fracao_oponente = []
+        # Area Entrega - Oponente
+
+        area_entrega_oponente = self.mesa.get_remote_area_entrega()
+        txt_oponente = "Area Entrega Oponente: " + str(area_entrega_oponente) + " fatias prontas"
+        self.area_entrega = Label(self.frame_oponente,
+                                  bg='pink',
+                                  text=txt_oponente
+                                  )
+        self.area_entrega.place(width=400, height=50, x=300, y=200)
         
+        # -- Frame Cartas Oponente
+        self.frame_cartas_oponente = Frame(self.frame_oponente, width=600, height=250, bg="green")
+        self.frame_cartas_oponente.place(x=700, y=0)
+        self.cartas_oponente = self.mesa.get_remote_cartas()
+        
+        #Imagens de Carta
+        self.imagens_carta_oponente = []
+        for carta in self.cartas_oponente:
+            self.imagens_carta_oponente.append(PhotoImage(file=carta.cardimage))
+
+        #Labels de Cartas
+        self.label_cartas_oponente= [] 
+        for imagem_op in self.imagens_carta_oponente:
+            a_Label = Label(self.frame_cartas_oponente, image=imagem_op, bg="grey")
+            self.label_cartas_oponente.append(a_Label)
+        
+        #Posiciona as cartas no grid
+        col=0
+        for label in self.label_cartas_oponente:
+            label.grid(row=0, column=col, padx=7, pady=60)
+            col = col + 1
         # -- 
         
         # -----
@@ -100,14 +124,22 @@ class InterfaceJogador(DogPlayerInterface):
         self.frame_central = Frame(self.main_window, width=1280, height=220, bg="khaki1")
         self.frame_central.grid(row=1, column=0)
 
-        self.baralho_fracoes = Label(self.frame_central, text="baralho_fracoes", bg='yellow', borderwidth=2, relief="solid")
+        self.baralho_fracoes = Label(self.frame_central, text="Ação: Comprar Carta de Fração", bg='yellow', borderwidth=2, relief="solid")
         self.baralho_fracoes.place(width=300, height=220, x=340, y=0)
-        self.baralho_fracoes.bind("<Button-1>", self.comprar_carta)
+        
 
-        self.baralho_missoes = Label(self.frame_central, text="baralho_missoes", bg="green", borderwidth=2, relief="solid")
+        self.baralho_missoes = Label(self.frame_central, text="Ação: Trocar missão", bg="green", borderwidth=2, relief="solid")
         self.baralho_missoes.place(width=300, height=220, x=660, y=0)
-        # ----
 
+        text_state = "Estado da Partida: "
+        if estado_partida == 2 or estado_partida == 0:
+            text_state = text_state + "Aguardando Jogada Local"
+        elif estado_partida == 3 or estado_partida == 1:
+            text_state = text_state + "Aguardando Jogada Remota"
+        self.estado_partida = Label(self.frame_central, text=text_state, bg='white', borderwidth=1, relief='solid', padx=-10, pady=-10)
+        self.estado_partida.place(width=339, height=50, x = 0, y = 0)
+
+        # ----
 
         #Frame jogador
         self.frame_jogador = Frame(self.main_window, width=1280, height=250, bg="blue")
@@ -137,10 +169,7 @@ class InterfaceJogador(DogPlayerInterface):
         for i in range (0, len(self.label_cartasjogador)):
             self.label_cartasjogador[i].config(text=str(cardnum[i]))
         
-        #Atribui bind handle_click às labels
-        for a in self.label_cartasjogador:
-            #print(a.cget("text"))
-            a.bind("<Button-1>", self.handle_click)
+
 
         #Posiciona as cartas no grid
         col=0
@@ -161,6 +190,7 @@ class InterfaceJogador(DogPlayerInterface):
                                         image=self.img_pizza_jogador)
         self.pizza_jogador.place(width=400, height=200, x=620, y=50)
 
+        # area entrega -> self.localplayer_info[2]
         area_entrega = self.localplayer_info[2]
         txt = "Area Entrega: " + str(area_entrega) + " fatias prontas"
         self.area_entrega = Label(self.frame_jogador,
@@ -172,40 +202,142 @@ class InterfaceJogador(DogPlayerInterface):
 
         # missao_jogador
         #self.localplayer_info[3]
-        self.img_missao_jogador = PhotoImage(file="src/images/missao1-2.png")
+        self.local_carta_missao = self.localplayer_info[3]
+        local_carta_missao_filename = self.local_carta_missao.cardimage
+        self.img_missao_jogador = PhotoImage(file=local_carta_missao_filename)
         self.missao_jogador = Label(self.frame_jogador,
                                           bg="blue",
                                           image=self.img_missao_jogador)
+        
         self.missao_jogador.place(width=200, height=250, x=1050, y=0)
 
+        ## Seção Binds de Função -> Só cria caso seja o turno do jogador local##
+        if estado_partida == 2 or estado_partida == 0:
+            self.baralho_fracoes.bind("<Button-1>", self.comprar_carta)
 
-    def fatiar_pizza(self):
-        # manda comando pra fatiar pizza -> self.mesa.fatiar_pizza()
-        # re-renderiza interface -> self.update_interface(5)
-        # chama função de enviar info pro oponente
-        print("whoosh")
+            #Atribui bind fatiar_pizza às labels
+            for a in self.label_cartasjogador:
+                a.bind("<Button-1>", self.fatiar_pizza)
 
-    def handle_click(self, event):
+            self.missao_jogador.bind("<Button-1>", self.completar_missao)
+            self.baralho_missoes.bind("<Button-1>", self.trocar_missao)
+        #print(a.cget("text"))
+
+    def fatiar_pizza(self, event):
         #objeto EVENT tem uma referencia ao widget label que está atrelado ao clique
         #print(event.widget.cget("text"))
         num = event.widget.cget("text")
-        self.mesa.fatiar_pizza(num)
-        self.update_interface(2)
+        message = self.mesa.fatiar_pizza(num)
+        if message is not None:
+            messagebox.showinfo(message=message)
+        else:
+            self.update_interface(self.mesa.get_estado_partida())
+            dict = self.montar_dict()
+            dict['match_status'] = "next"
+            self.dog_server_interface.send_move(dict)
+
 
     def comprar_carta(self, event):
         message = self.mesa.comprar_carta()
         if message is not None:
             messagebox.showinfo(message=message)
-        self.update_interface(2)
+        else:
+            self.update_interface(self.mesa.get_estado_partida())
+            dict = self.montar_dict()
+            dict['match_status'] = "next"
+            self.dog_server_interface.send_move(dict)
+
+    def completar_missao(self, event):
+        message = self.mesa.completar_missao()
+        if message == "Vitória":
+            #call end game
+            print(message)
+
+        messagebox.showinfo(message=message)
+        if self.mesa.get_estado_partida() == 3:
+            self.update_interface(self.mesa.get_estado_partida())
+            dict = self.montar_dict()
+            dict['match_status'] = "next"
+            self.dog_server_interface.send_move(dict)
+            
+    
+    def trocar_missao(self, event):
+        message = self.mesa.trocar_missao()
+        if message is not None:
+            messagebox.showinfo(message=message)
+        else:
+            self.update_interface(self.mesa.get_estado_partida())
+            dict = self.montar_dict()
+            dict['match_status'] = "next"
+            self.dog_server_interface.send_move(dict)
+        
 
     def start_match(self):
         start_status = self.dog_server_interface.start_match(2)
         message = start_status.get_message()
         messagebox.showinfo(message=message)
         if (start_status.get_code() == "2"):
-            self.main_game_screen()
+            self.mesa.start_match()
+            dict = self.montar_dict()
+            dict['match_status'] = "progress"
+            self.dog_server_interface.send_move(dict)
+            print("Mandou Infos")
+            self.update_interface(self.mesa.get_estado_partida())
+
 
     def receive_start(self, start_status):
+        print("recebeu inicio")
         message = start_status.get_message()
         messagebox.showinfo(message=message)
-        self.main_game_screen()
+        self.mesa.receive_start()
+
+    def receive_move(self, a_move):
+        self.mesa.receive_move(a_move)
+        self.update_interface(self.mesa.get_estado_partida())
+
+    def montar_dict(self):
+        estado_partida = self.mesa.get_estado_partida()
+        if estado_partida == 0:
+            self.localplayer_info = self.mesa.get_localplayer_info()
+            self.remoteplayer_info = self.mesa.get_remoteplayer_info()
+            dict_jogada = {}
+            dict_jogada['carta0_A'] = self.localplayer_info[0][0].cardimage
+            dict_jogada['carta1_A'] = self.localplayer_info[0][1].cardimage
+            dict_jogada['carta2_A'] = self.localplayer_info[0][2].cardimage
+            dict_jogada['carta3_A'] = self.localplayer_info[0][3].cardimage
+            dict_jogada['carta4_A'] = self.localplayer_info[0][4].cardimage
+            dict_jogada['carta0_B'] = self.remoteplayer_info[0][0].cardimage
+            dict_jogada['carta1_B'] = self.remoteplayer_info[0][1].cardimage
+            dict_jogada['carta2_B'] = self.remoteplayer_info[0][2].cardimage
+            dict_jogada['carta3_B'] = self.remoteplayer_info[0][3].cardimage
+            dict_jogada['carta4_B'] = self.remoteplayer_info[0][4].cardimage
+
+            dict_jogada['pizzas_A'] = self.localplayer_info[1]
+            dict_jogada['pizzas_B'] = self.remoteplayer_info[1]
+
+            dict_jogada['area_entrega_A'] = self.localplayer_info[2]
+            dict_jogada['area_entrega_B'] = self.remoteplayer_info[2]
+
+            dict_jogada['missao_A'] = self.localplayer_info[3].cardimage
+            dict_jogada['missao_B'] = self.remoteplayer_info[3].cardimage
+
+            return dict_jogada
+        else:
+            # montagem do dicionario para inicialização de um jogador remoto
+            # get_player_info: 0-Cartas, 1-Pizzas, 2- Area de Entrega, 3-Missão
+            self.player_info = self.mesa.get_localplayer_info()
+            dict_jogada = {}
+
+            #insere cartas no dicionario
+            card_count = 0
+            for carta in self.player_info[0]:
+                dict_jogada[str(card_count)] = carta.cardimage
+                card_count = card_count + 1
+            
+            dict_jogada['pizzas'] = self.player_info[1]
+            dict_jogada['area_entrega'] = self.player_info[2]
+            dict_jogada['missao'] = self.player_info[3].cardimage
+            #keyerror - try-catch
+            #print(dict_jogada['aaa'])
+            return dict_jogada
+
