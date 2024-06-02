@@ -27,6 +27,7 @@ class Jogador:
         self.__missao = None
         self.__cartas = []
         self.__pizzas = 16
+        self.__area_entrega = 0
         self.__meu_turno = False
         self.__vencedor = False
 
@@ -36,7 +37,7 @@ class Jogador:
     
     @missao.setter
     def missao(self, nova_missao):
-        self._missao = nova_missao
+        self.__missao = nova_missao
 
     @property
     def cartas(self):
