@@ -1,7 +1,6 @@
 from jogador import Jogador
 from carta import Carta
 import random
-import re
 
 # 	Mesa: estado_partida
 # 0 - estado inicial local
@@ -62,6 +61,7 @@ class Mesa:
     
     def get_remote_area_entrega(self):
         return self.remote_player.area_entrega
+
     def get_remoteplayer_info(self):
         return [self.remote_player.cartas, self.remote_player.pizzas, self.remote_player.area_entrega, self.remote_player.missao]
     
@@ -110,10 +110,6 @@ class Mesa:
             return None
         else:
             return "Não há cartas o suficiente para realizar a troca"
-    
-    #Monta perfil jogador_remoto com o dict a_move
-    def montar_info_jogada(self, jogada):
-        NotImplemented
     
     def start_match(self):
         local_cartas = self.rand_cartas()
