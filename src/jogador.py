@@ -9,7 +9,6 @@ class Jogador:
         self.__cartas = []
         self.__pizzas = 16
         self.__area_entrega = 0
-        self.__meu_turno = False
         self.__vencedor = False
 
     def inicializar(self, an_id, a_number, a_name, cartas_fracao: list, missao ):
@@ -28,7 +27,6 @@ class Jogador:
         self.__cartas = []
         self.__pizzas = 16
         self.__area_entrega = 0
-        self.__meu_turno = False
         self.__vencedor = False
 
     @property
