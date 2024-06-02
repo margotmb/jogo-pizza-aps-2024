@@ -11,7 +11,6 @@ class InterfaceJogador(DogPlayerInterface):
         # Instanciar Tk
         self.main_window = Tk()
         self.mesa = Mesa()# Tratamento do domínio do problema
-        self.test_var = 0
         # Organização e preenchimento da janela  
         self.fill_main_window()
 
@@ -30,7 +29,6 @@ class InterfaceJogador(DogPlayerInterface):
         # Main Loop
         self.main_window.mainloop()
 
-    
     # Popula a janela Tk com os elementos
     def fill_main_window(self):
         estado_partida = self.mesa.get_estado_partida()
@@ -47,8 +45,6 @@ class InterfaceJogador(DogPlayerInterface):
         self.start_button.place(width=150, height=50, anchor='center', relx=0.5, rely=0.55)
         self.start_button.bind("<Button-1>", lambda e: self.start_match())
         #self.start_button.bind("<Button-1>", lambda e: self.update_interface(estado_partida))
-
-
 
     def update_interface(self,estado_partida):
         if estado_partida == 0 or estado_partida == 1:
@@ -236,7 +232,6 @@ class InterfaceJogador(DogPlayerInterface):
             dict['match_status'] = "next"
             self.dog_server_interface.send_move(dict)
 
-
     def comprar_carta(self, event):
         message = self.mesa.comprar_carta()
         if message is not None:
@@ -259,8 +254,7 @@ class InterfaceJogador(DogPlayerInterface):
             dict = self.montar_dict()
             dict['match_status'] = "next"
             self.dog_server_interface.send_move(dict)
-            
-    
+              
     def trocar_missao(self, event):
         message = self.mesa.trocar_missao()
         if message is not None:
@@ -271,7 +265,6 @@ class InterfaceJogador(DogPlayerInterface):
             dict['match_status'] = "next"
             self.dog_server_interface.send_move(dict)
         
-
     def start_match(self):
         start_status = self.dog_server_interface.start_match(2)
         message = start_status.get_message()
@@ -283,7 +276,6 @@ class InterfaceJogador(DogPlayerInterface):
             self.dog_server_interface.send_move(dict)
             print("Mandou Infos")
             self.update_interface(self.mesa.get_estado_partida())
-
 
     def receive_start(self, start_status):
         print("recebeu inicio")
