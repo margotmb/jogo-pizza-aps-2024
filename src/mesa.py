@@ -169,12 +169,10 @@ class Mesa:
             self.remote_player.area_entrega = int(a_move['area_entrega'])
             self.remote_player.missao = self.montar_carta_missao(a_move['missao'])
 
-                
-                
-                
             print(a_move)
             #libera jogador local p/ jogar
             self.estado_partida=2
+
     
     def get_estado_partida(self):
         return self.estado_partida

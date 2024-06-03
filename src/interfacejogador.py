@@ -244,9 +244,6 @@ class InterfaceJogador(DogPlayerInterface):
 
     def completar_missao(self, event):
         message = self.mesa.completar_missao()
-        if message == "Vitória":
-            #call end game
-            print(message)
 
         messagebox.showinfo(message=message)
         if self.mesa.get_estado_partida() == 3:
@@ -254,7 +251,12 @@ class InterfaceJogador(DogPlayerInterface):
             dict = self.montar_dict()
             dict['match_status'] = "next"
             self.dog_server_interface.send_move(dict)
-              
+        if self.mesa.get_estado_partida() == 4:
+            self.update_interface(self.mesa.get_estado_partida())
+            dict = self.montar_dict()
+            dict['match_status'] = "finalize"
+            self.dog_server_interface.send_move(dict)
+
     def trocar_missao(self, event):
         message = self.mesa.trocar_missao()
         if message is not None:
@@ -286,6 +288,8 @@ class InterfaceJogador(DogPlayerInterface):
     def receive_move(self, a_move):
         self.mesa.receive_move(a_move)
         self.update_interface(self.mesa.get_estado_partida())
+        if (a_move['match_status'] == 'finalize'):
+            messagebox.showinfo(message="Você perdeu :(")
 
     def montar_dict(self):
         estado_partida = self.mesa.get_estado_partida()
