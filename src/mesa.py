@@ -111,17 +111,25 @@ class Mesa:
         else:
             return "Não há cartas o suficiente para realizar a troca"
     
-    def start_match(self):
+    def start_match(self, players, local_player_id):
+        print("DOG Jogadores:")
+        print(players)
+        print("Local Player ID")
+        print(local_player_id)
         local_cartas = self.rand_cartas()
         local_missao = self.rand_missao()
         remote_cartas = self.rand_cartas()
         remote_missao = self.rand_missao()
-        self.local_player.inicializar("Green player", 1 , "Green player", local_cartas, local_missao)
-        self.remote_player.inicializar("Red player", 2, "Red player", remote_cartas, remote_missao)
+        # inicializar: an_id, a_number, a_name, cartas_fracao: list, missao 
+        self.local_player.inicializar(local_player_id, 1 , "Green player", local_cartas, local_missao)
+        self.remote_player.inicializar("Oponente", 2, "Red player", remote_cartas, remote_missao)
         print("Inicializou")
 
-    def receive_start(self):
+    def receive_start(self, players, local_player_id):
+        ## TO DO
         print("Entrou no receive_start")
+        print("Array Players:")
+        print(players)
         self.estado_partida = 1
 
     def receive_move(self, a_move):
@@ -130,7 +138,6 @@ class Mesa:
         if self.estado_partida == 1:
             #fazer inicializações com o a_move recebido
             print("Entrou no receive move inicial")
-            print
             self.remote_player.cartas.append(self.montar_carta_object(a_move['carta0_A']))
             self.remote_player.cartas.append(self.montar_carta_object(a_move['carta1_A']))
             self.remote_player.cartas.append(self.montar_carta_object(a_move['carta2_A']))

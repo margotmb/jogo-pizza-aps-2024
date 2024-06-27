@@ -4,6 +4,7 @@ from tkinter import simpledialog
 from mesa import Mesa
 from dog.dog_interface import DogPlayerInterface
 from dog.dog_actor import DogActor
+import sys
 
 
 class InterfaceJogador(DogPlayerInterface):
@@ -269,21 +270,32 @@ class InterfaceJogador(DogPlayerInterface):
         
     def start_match(self):
         start_status = self.dog_server_interface.start_match(2)
+        code = start_status.get_code()
         message = start_status.get_message()
-        messagebox.showinfo(message=message)
-        if (start_status.get_code() == "2"):
-            self.mesa.start_match()
+        if code == "2":
+            players = start_status.get_players()
+            local_player_id = start_status.get_local_id()
+            self.mesa.start_match(players, local_player_id)
             dict = self.montar_dict()
             dict['match_status'] = "progress"
             self.dog_server_interface.send_move(dict)
             print("Mandou Infos")
+            messagebox.showinfo(message=message)
             self.update_interface(self.mesa.get_estado_partida())
+        elif code == "0" or code == "1":
+            messagebox.showinfo(message=message)
 
     def receive_start(self, start_status):
         print("recebeu inicio")
         message = start_status.get_message()
         messagebox.showinfo(message=message)
-        self.mesa.receive_start()
+        players = start_status.get_players()
+        local_player_id = start_status.get_local_id()
+        self.mesa.receive_start(players, local_player_id)
+    
+    def receive_withdrawal_notification(self):
+        messagebox.showinfo(message="Oponente declarou desistência")
+        sys.exit(0)
 
     def receive_move(self, a_move):
         self.mesa.receive_move(a_move)
