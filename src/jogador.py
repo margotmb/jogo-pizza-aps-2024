@@ -58,3 +58,27 @@ class Jogador:
     @area_entrega.setter
     def area_entrega(self, new_value):
         self.__area_entrega = new_value
+
+    @property
+    def identificador(self):
+        return self.__identificador
+    
+    @identificador.setter  
+    def identificador(self, an_id):
+        self.__identificador = an_id
+
+    @property
+    def nome(self):
+        return self.__nome
+
+    @nome.setter
+    def nome(self, a_name):
+        self.__nome = a_name
+
+    @property
+    def num_jogador(self):
+        return self.__num_jogador
+
+    @num_jogador.setter
+    def num_jogador(self, a_num):
+        self.__num_jogador = a_num    
