@@ -120,9 +120,13 @@ class Mesa:
         local_missao = self.rand_missao()
         remote_cartas = self.rand_cartas()
         remote_missao = self.rand_missao()
+
+        if players[0][2] == '2':
+            print("start_match: Atualizou estado_partida")
+            self.estado_partida = 3
         # inicializar: an_id, a_number, a_name, cartas_fracao: list, missao 
-        self.local_player.inicializar(local_player_id, 1 , "Green player", local_cartas, local_missao)
-        self.remote_player.inicializar("Oponente", 2, "Red player", remote_cartas, remote_missao)
+        self.local_player.inicializar(local_player_id, players[0][2] , players[0][0], local_cartas, local_missao)
+        self.remote_player.inicializar(players[1][1], players[1][2], players[1][0], remote_cartas, remote_missao)
         print("Inicializou")
 
     def receive_start(self, players, local_player_id):
@@ -130,12 +134,23 @@ class Mesa:
         print("Entrou no receive_start")
         print("Array Players:")
         print(players)
-        self.estado_partida = 1
+        self.remote_player.nome = players[1][0]
+        self.remote_player.identificador = players[1][1]
+        self.remote_player.num_jogador = players[1][2]
+
+        self.local_player.nome = players[0][0]
+        self.local_player.identificador = players[0][1]
+        self.local_player.num_jogador = players[0][2]
+        if self.local_player.num_jogador == '2':
+            self.estado_partida = 1
+        else:
+            self.estado_partida = 0
+
 
     def receive_move(self, a_move):
         print("Entrou no receive_move")
         print("Estado partida: " + str(self.estado_partida))
-        if self.estado_partida == 1:
+        if self.estado_partida == 1 or self.estado_partida == 0:
             #fazer inicializações com o a_move recebido
             print("Entrou no receive move inicial")
             self.remote_player.cartas.append(self.montar_carta_object(a_move['carta0_A']))
@@ -158,7 +173,10 @@ class Mesa:
 
             self.remote_player.missao = self.montar_carta_missao(a_move['missao_A'])
             self.local_player.missao = self.montar_carta_missao(a_move['missao_B'])
-            self.estado_partida=3
+            if self.estado_partida == 1:
+                self.estado_partida=3
+            else:
+                self.estado_partida=2
 
 
         elif self.estado_partida == 3:
