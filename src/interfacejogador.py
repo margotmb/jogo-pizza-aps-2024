@@ -218,7 +218,7 @@ class InterfaceJogador(DogPlayerInterface):
 
             self.missao_jogador.bind("<Button-1>", self.completar_missao)
             self.baralho_missoes.bind("<Button-1>", self.trocar_missao)
-        #print(a.cget("text"))
+
 
     def fatiar_pizza(self, event):
         #objeto EVENT tem uma referencia ao widget label que está atrelado ao clique
@@ -345,7 +345,6 @@ class InterfaceJogador(DogPlayerInterface):
             dict_jogada['pizzas'] = self.player_info[1]
             dict_jogada['area_entrega'] = self.player_info[2]
             dict_jogada['missao'] = self.player_info[3].cardimage
-            #keyerror - try-catch
-            #print(dict_jogada['aaa'])
+
             return dict_jogada
 
