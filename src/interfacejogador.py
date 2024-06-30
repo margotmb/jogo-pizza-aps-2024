@@ -305,7 +305,7 @@ class InterfaceJogador(DogPlayerInterface):
 
     def montar_dict(self):
         estado_partida = self.mesa.get_estado_partida()
-        if estado_partida == 0:
+        if estado_partida == 0 or estado_partida == 1:
             self.localplayer_info = self.mesa.get_localplayer_info()
             self.remoteplayer_info = self.mesa.get_remoteplayer_info()
             dict_jogada = {}
