@@ -123,7 +123,7 @@ class Mesa:
 
         if players[0][2] == '2':
             print("start_match: Atualizou estado_partida")
-            self.estado_partida = 3
+            self.estado_partida = 1
         # inicializar: an_id, a_number, a_name, cartas_fracao: list, missao 
         self.local_player.inicializar(local_player_id, players[0][2] , players[0][0], local_cartas, local_missao)
         self.remote_player.inicializar(players[1][1], players[1][2], players[1][0], remote_cartas, remote_missao)
@@ -201,6 +201,9 @@ class Mesa:
     
     def get_estado_partida(self):
         return self.estado_partida
+    
+    def set_estado_partida(self, a_num):
+        self.estado_partida = a_num
     
     def montar_carta_object(self, txt):
         if txt == 'src/images/fracao1-2.png':

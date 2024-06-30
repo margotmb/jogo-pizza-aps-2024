@@ -94,7 +94,7 @@ class InterfaceJogador(DogPlayerInterface):
         self.area_entrega.place(width=400, height=50, x=300, y=200)
         
         # -- Frame Cartas Oponente
-        self.frame_cartas_oponente = Frame(self.frame_oponente, width=600, height=250, bg="green")
+        self.frame_cartas_oponente = Frame(self.frame_oponente, width=600, height=250, bg="red")
         self.frame_cartas_oponente.place(x=700, y=0)
         self.cartas_oponente = self.mesa.get_remote_cartas()
         
@@ -125,7 +125,7 @@ class InterfaceJogador(DogPlayerInterface):
         self.baralho_fracoes.place(width=300, height=220, x=340, y=0)
         
 
-        self.baralho_missoes = Label(self.frame_central, text="Ação: Trocar missão", bg="green", borderwidth=2, relief="solid")
+        self.baralho_missoes = Label(self.frame_central, text="Ação: Trocar missão", bg="yellow", borderwidth=2, relief="solid")
         self.baralho_missoes.place(width=300, height=220, x=660, y=0)
 
         text_state = "Estado da Partida: "
@@ -143,7 +143,7 @@ class InterfaceJogador(DogPlayerInterface):
         self.frame_jogador.grid(row=2, column=0)
 
         #Frame Cartas Jogador
-        self.frame_cartasjogador = Frame(self.frame_jogador, width=620, height=250, bg='green', padx=5)
+        self.frame_cartasjogador = Frame(self.frame_jogador, width=620, height=250, bg='blue', padx=5)
         self.frame_cartasjogador.place(x=0, y=0)
 
         #IMPLEMENTAR -> Solução geral, get_player_info, 0-Cartas, 1-Pizzas, 2- Area de Entrega, 3-Missão
@@ -328,6 +328,11 @@ class InterfaceJogador(DogPlayerInterface):
 
             dict_jogada['missao_A'] = self.localplayer_info[3].cardimage
             dict_jogada['missao_B'] = self.remoteplayer_info[3].cardimage
+
+            if estado_partida == 1:
+                self.mesa.set_estado_partida(3)
+            elif estado_partida == 0:
+                self.mesa.set_estado_partida(2)
 
             return dict_jogada
         else:
